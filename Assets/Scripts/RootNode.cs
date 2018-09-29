@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RootNode : MonoBehaviour
 {
+    public float Acceleration;
     public float GrowthSpeed;
     public float ShrinkRate;
 
@@ -15,6 +16,8 @@ public class RootNode : MonoBehaviour
         isGrowing = true;
 
         player = GameObject.Find("/Script Holder").GetComponent<Player>();
+
+        player.AddScore(5);
 
         transform.localScale = new Vector3(0, 0, 0);
     }
@@ -28,7 +31,7 @@ public class RootNode : MonoBehaviour
     {
         if (isGrowing)
         {
-            transform.localScale += new Vector3(GrowthSpeed * Time.deltaTime, GrowthSpeed * Time.deltaTime, GrowthSpeed * Time.deltaTime);
+            transform.localScale += new Vector3(((player.RootParts * Acceleration) + GrowthSpeed) * Time.deltaTime, ((player.RootParts * Acceleration) + GrowthSpeed) * Time.deltaTime, ((player.RootParts * Acceleration) + GrowthSpeed) * Time.deltaTime);
 
             if (transform.localScale.y >= 0.75f * Mathf.Pow(ShrinkRate, player.RootParts))
             {

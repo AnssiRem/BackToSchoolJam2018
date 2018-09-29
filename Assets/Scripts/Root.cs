@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    public float Acceleration;
     public float GrowthSpeed;
     public float ShrinkRate;
     public GameObject Node;
@@ -34,7 +35,7 @@ public class Root : MonoBehaviour
     {
         if (isGrowing)
         {
-            transform.localScale += new Vector3(0, GrowthSpeed * Time.deltaTime, 0);
+            transform.localScale += new Vector3(0, ((player.RootParts * Acceleration) + GrowthSpeed) * Time.deltaTime, 0);
 
             if (player.MovementDirection == Player.Directions.Right)
             {
