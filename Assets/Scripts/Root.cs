@@ -11,6 +11,7 @@ public class Root : MonoBehaviour
 
     private bool isGrowing;
     private bool touchedFirstNode;
+    private Sound sound;
     private Player player;
     private Vector3 initialPosition;
     private Vector3 nodePosition;
@@ -22,6 +23,10 @@ public class Root : MonoBehaviour
         isGrowing = true;
 
         player = GameObject.Find("/Script Holder").GetComponent<Player>();
+
+        sound = GameObject.Find("/Script Holder").GetComponent<Sound>();
+
+        sound.PlayRoot();
 
         transform.localScale = new Vector3(transform.localScale.x * Mathf.Pow(ShrinkRate, player.RootParts), 0, transform.localScale.z * Mathf.Pow(ShrinkRate, player.RootParts));
     }
@@ -116,6 +121,7 @@ public class Root : MonoBehaviour
                 }
                 else if(other.gameObject.tag == "Loot")
                 {
+                    sound.PlayLoot();
                     Destroy(other.gameObject);
                     player.AddScore(100);
                 }

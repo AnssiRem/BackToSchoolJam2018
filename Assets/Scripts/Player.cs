@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private int score;
     private string[] taunts;
     private Text scoreText;
+    private Sound sound;
     private Vector3 currentPosition;
     private Vector3 nextPosition;
 
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
     {
         lives = 4;
         scoreText = GameObject.Find("/Canvas/Score Text").GetComponent<Text>();
+        sound = GameObject.Find("/Script Holder").GetComponent<Sound>();
         currentPosition = Vector3.zero;
         timeUntilMove = ForceMoveDelay;
 
@@ -120,6 +122,12 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene("Main");
         }
+
+        //Quit
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void AddScore(int amount)
@@ -134,6 +142,8 @@ public class Player : MonoBehaviour
         finalSize += RootParts;
         RootParts = 0;
         MovementDirection = Directions.Null;
+        sound.PlayDie();
+
         if (lives <= 0)
         {
             GameOver();
@@ -209,6 +219,7 @@ public class Player : MonoBehaviour
         TauntText.GetComponent<Text>().text = taunts[((int)Random.Range(0, taunts.Length) - 1)];
         ResetText.SetActive(true);
         MainCamera.GetComponent<CameraController>().GameOver();
+        sound.PlayGameOver();
 
         foreach (var gameObj in FindObjectsOfType(typeof(GameObject)) as GameObject[])
         {
